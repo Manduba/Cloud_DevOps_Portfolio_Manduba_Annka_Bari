@@ -1,0 +1,30 @@
+stages:
+  - build
+  - test
+
+variables:
+  GET_LEVEL: "1"  # Set the environment variable for testing
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t canario-webpage .
+
+test:
+  stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+    
+  script:
+    - docker run -p 8000:8000 -e GET_LEVEL=1 -d canario-webpage
+    - sleep 5
+    - docker ps
+    - echo "Testing connectivity..."
+    - curl -f http://localhost:8000 || (echo "Test failed!" && exit 1)
+  after_script:
+    - docker stop canario-webpage
+    - docker rm canario-webpage

@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    image: project_canario              # Replace with your image name
+    ports:
+      - "80:80"                    # Maps host port 80 to container port 80
+    depends_on:
+      - db                         # Ensures the db starts first
+
+  db:
+    image: postgres:latest         # Example using PostgreSQL
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
