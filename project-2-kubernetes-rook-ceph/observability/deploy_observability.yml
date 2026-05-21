@@ -1,0 +1,47 @@
+- name: Deploy Prometheus, Grafana, and Loki with emptyDir
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    ansible_python_interpreter: "{{ playbook_dir }}/venv/bin/python"
+
+  tasks:
+    - name: Create observability namespace
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: observability
+
+    - name: Deploy Prometheus
+      kubernetes.core.k8s:
+        state: present
+        src: files/prometheus.yaml
+
+    - name: Deploy Grafana
+      kubernetes.core.k8s:
+        state: present
+        src: files/grafana.yaml
+
+    - name: Deploy Loki
+      kubernetes.core.k8s:
+        state: present
+        src: files/loki.yaml
+
+    - name: Deploy Prometheus Service
+      kubernetes.core.k8s:
+        src: files/prometheus-svc.yaml
+        state: present
+
+    - name: Deploy Grafana Service
+      kubernetes.core.k8s:
+        src: files/grafana-svc.yaml
+        state: present
+
+    - name: Deploy Loki Service
+      kubernetes.core.k8s:
+        src: files/loki-svc.yaml
+        state: present
