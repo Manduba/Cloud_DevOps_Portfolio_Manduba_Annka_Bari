@@ -21,3 +21,20 @@ Folder:
 
 ```text
 project-1-Canario-devops/
+
+### 2. A Storage Solution
+
+This project was completed as part of the ACIT 4430 Infrastructure Services and Operations course at OsloMet. The goal is to design and test a Kubernetes-based storage solution using Rook-Ceph on OpenStack. 
+
+Main topics:
+- Terraforom for provisioning
+- Ansible for configuration
+- Kubernetes cluster 
+- Ceph storage setup
+- Observability setup using Prometheus, Grafana, and Loki
+- Backup integration attempt using Kasten K10
+
+Folder:
+
+```text
+project-2-kubernetes-rook-ceph/
